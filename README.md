@@ -25,9 +25,7 @@ Ferramenta para captação de leads contábeis, integrando raspagem de dados do 
 ## 🛠️ Tecnologias Utilizadas
 
 - **Python** (*raspagem com `Selenium`/`BeautifulSoup` ou `Scrapy`*).  
-- **API Oficial do WhatsApp Business** ou bibliotecas como `pywhatkit`.  
-- **Banco de Dados** (*SQLite, PostgreSQL*) para armazenar CNPJs e contatos.  
-- **Gerenciamento de Tasks** (*Celery* ou *Cron* para agendamento).  
+- **API Oficial do WhatsApp Business** ou bibliotecas como `pywhatkit`.   
 
 ---
 
