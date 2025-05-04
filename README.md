@@ -1,43 +1,45 @@
-Automação de Prospecção Contábil via WhatsApp
+# 📊 Automação de Prospecção Contábil via WhatsApp
 
-Ferramenta para captação de leads contábeis, integrando raspagem de dados do EmpresaDois, consulta de CNPJs na Receita Federal e disparo de mensagens personalizadas via API do WhatsApp.
+Ferramenta para captação de leads contábeis, integrando raspagem de dados do [EmpresaDois](https://empresadois.com.br), consulta de CNPJs na [Receita Federal](https://www.gov.br/receitafederal) e disparo de mensagens personalizadas via **API do WhatsApp**.
 
-Funcionalidades Principais
-🕸️ Raspagem de Dados: Extrai CNPJs de empresas de acordo com filtros (localidade, atividade econômica, etc.) do site EmpresaDois.
+![Badge](https://img.shields.io/badge/Python-3.8%2B-blue) ![Badge](https://img.shields.io/badge/License-MIT-green) ![Badge](https://img.shields.io/badge/Status-Desenvolvimento%20Ativo-orange)
 
-🔍 Consulta de Contatos: Obtém telefones e e-mails associados aos CNPJs via dados públicos da Receita Federal.
+---
 
-📲 Integração com WhatsApp: Envio automatizado de mensagens oferecendo serviços contábeis.
+## ✨ Funcionalidades Principais
 
-📊 Filtros Personalizáveis: Busca empresas por segmento, região, porte ou CNAE.
+- **🕸️ Raspagem de Dados**:  
+  Extrai CNPJs de empresas de acordo com filtros (localidade, atividade econômica, etc.) do site EmpresaDois.
 
-Tecnologias Utilizadas
-Python (raspagem com Selenium/BeautifulSoup ou Scrapy).
+- **🔍 Consulta de Contatos**:  
+  Obtém telefones e e-mails associados aos CNPJs via dados públicos da Receita Federal.
 
-API Oficial do WhatsApp Business ou bibliotecas como pywhatkit.
+- **📲 Integração com WhatsApp**:  
+  Envio automatizado de mensagens oferecendo serviços contábeis.
 
-Banco de Dados (SQLite, PostgreSQL) para armazenar CNPJs e contatos.
+- **📊 Filtros Personalizáveis**:  
+  Busca empresas por segmento, região, porte ou CNAE.
 
-Gerenciamento de Tasks (Celery ou Cron para agendamento).
+---
 
-Aviso Importante
-⚠️ Respeite as políticas de uso do WhatsApp e leis de proteção de dados (LGPD/GDPR).
+## 🛠️ Tecnologias Utilizadas
 
-Evite spam: personalize mensagens e priorize empresas com potencial real de interesse.
+- **Python** (*raspagem com `Selenium`/`BeautifulSoup` ou `Scrapy`*).  
+- **API Oficial do WhatsApp Business** ou bibliotecas como `pywhatkit`.  
+- **Banco de Dados** (*SQLite, PostgreSQL*) para armazenar CNPJs e contatos.  
+- **Gerenciamento de Tasks** (*Celery* ou *Cron* para agendamento).  
 
-Como Contribuir
-Clone o repositório: git clone https://github.com/seu-usuario/contabot.git
+---
 
-Instale as dependências: pip install -r requirements.txt
+## ⚠️ Aviso Importante
 
-Configure as variáveis de ambiente (API keys, tokens).
+- Respeite as políticas de uso do WhatsApp e leis de proteção de dados (**LGPD/GDPR**).  
+- **Evite spam**: personalize mensagens e priorize empresas com potencial real de interesse.  
 
-Execute: python main.py
+---
 
-Contribuições são bem-vindas! 👩💻👨💻
+## 🚀 Como Contribuir
 
-Licença
-Distribuído sob a licença MIT. Veja LICENSE para detalhes.
-
-Tags
-prospecção contabilidade automação whatsapp-api web-scraping cnpj
+1. Clone o repositório:  
+   ```bash
+   git clone https://github.com/seu-usuario/contabot.git
