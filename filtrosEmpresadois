@@ -1,0 +1,18 @@
+from selenium import webdriver
+import time
+
+listaCidades = [["poa","6897"],["suzano", "7151"],["mogi-das-cruzes", "6713"], ["itaquaquecetuba","6563"]]
+listaAtividades = ["90019902", "8630504", "7319003", "6201501", "6201502", "6202300", "6203100", "6204000", "6209100"]
+listaSituacao = ["02", "04"]
+
+def filtrar():
+    url = "https://empresadois.com.br/cnpj/br/sao-paulo-sp?ms=1&st=sp&ct=td&ss=td&cn=td&ag=td&zc=td"
+
+    for cidade in listaCidades:
+        for atividade in listaAtividades:
+            for situacao in listaSituacao:
+                url = f"https://empresadois.com.br/cnpj/sp/{cidade[0]}-sp?ms=1&st=sp&ct={cidade[1]}&ss={situacao}&cn={atividade}&ag=td&zc=td"
+                print(url)
+
+filtrar()
+
