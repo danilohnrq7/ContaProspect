@@ -1,0 +1,127 @@
+import re
+import time
+import requests
+from selenium import webdriver
+from selenium.common import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+navegador = webdriver.Chrome()
+
+listaCidades = [["poa","7151"]]
+listaAtividades = ["90019902", "8630504"]
+listaSituacao = ["02", "04"]
+listaUrls = []
+listaCnpj = []
+listaTeste = ["22.142.562/0001-02", "60.281.875/0001-20","54.717.827/0001-40"]
+listaTelefones = []
+
+def filtrar():
+    url = "https://empresadois.com.br/cnpj/br/sao-paulo-sp?ms=1&st=sp&ct=td&ss=td&cn=td&ag=td&zc=td"
+
+    for cidade in listaCidades:
+        for atividade in listaAtividades:
+            for situacao in listaSituacao:
+                url = f"https://empresadois.com.br/cnpj/sp/{cidade[0]}-sp?ms=1&st=sp&ct={cidade[1]}&ss={situacao}&cn={atividade}&ag=td&zc=td"
+                listaUrls.append(url)
+
+filtrar()
+
+print(listaUrls)
+
+def extrai_e_adiciona(elemento, lista):
+    texto_div = elemento.text
+    linhas = texto_div.split("\n")
+    for linha in linhas:
+        s = linha.strip()
+        if len(s) == 18 and s[2]=='.' and s[6]=='.' and s[10]=='/' and s[15]=='-':
+            lista.append(s)
+
+
+
+def obterCnpj():
+    for url in listaUrls:
+        navegador.get(url)
+
+        while True:
+            divs = navegador.find_elements(By.CLASS_NAME, "city_comp")
+            for div in divs:
+                extrai_e_adiciona(div, listaCnpj)
+
+            try:
+                btn_proxima = WebDriverWait(navegador, 5).until(
+                    EC.element_to_be_clickable((By.LINK_TEXT, "Próxima página"))
+                )
+                btn_proxima.click()
+                # volta para o topo do loop e aguarda carregar a nova página
+            except TimeoutException:
+                # botão não ficou disponível — fim das páginas
+                break
+
+
+
+
+obterCnpj()
+print(listaCnpj)
+
+
+def obterContato(listaCNPJ):
+    for cnpj in listaCNPJ:
+        cnpj_limpo = cnpj.strip().replace(".", "").replace("/", "").replace("-", "")
+        url = f"https://www.receitaws.com.br/v1/cnpj/{cnpj_limpo}?token=7ed1d1e292007b1b315464ff9e515835fe7c38e146a66c31965e6145a5332cfc"
+
+        headers = {"User-Agent": "Mozilla/5.0"}
+
+        try:
+            resposta = requests.get(url, headers=headers, timeout=10)
+
+            # Verifica se a resposta foi bem-sucedida
+            resposta.raise_for_status()
+
+            dados = resposta.json()
+
+            # Verifica se a API retornou um erro
+            if dados.get('status') == 'ERROR':
+                print(f"Erro para CNPJ {cnpj}: {dados.get('message')}")
+                listaTelefones.append("----")
+                continue
+
+            telefone_raw = dados.get("telefone")
+
+            # Processamento do telefone
+            if telefone_raw is None:
+                telefone_limpo = "----"
+            else:
+                telefone_limpo = re.sub(r"[^\d+/]", "", telefone_raw.strip())
+                lista = telefone_limpo.split("/")
+                listaTelefones.append(lista)
+
+        except requests.exceptions.HTTPError as errh:
+            print(f"Erro HTTP para CNPJ {cnpj}: {errh}")
+            listaTelefones.append("----")
+        except requests.exceptions.JSONDecodeError:
+            print(f"Resposta inválida para CNPJ {cnpj}. Conteúdo: {resposta.text}")
+            listaTelefones.append("----")
+        except Exception as e:
+            print(f"Erro inesperado para CNPJ {cnpj}: {e}")
+            listaTelefones.append("----")
+
+        # Atraso para evitar rate limiting (20 segundos conforme recomendação da API)
+        time.sleep(20)
+
+
+
+
+
+
+obterContato(listaCnpj)
+
+print(listaTelefones)
+
+def enviarMensagem():
+    for telefone in listaTelefones:
+        for x in telefone:
+            print(x)
+
+enviarMensagem()
